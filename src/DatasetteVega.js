@@ -196,7 +196,7 @@ class DatasetteVega extends Component {
   hideChart() {
     this.setState({
       show: false
-    }, this.renderGraph.bind(this));
+    });
   }
   render() {
     const onChangeSelect = this.onChangeSelect.bind(this);
