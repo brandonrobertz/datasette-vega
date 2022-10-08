@@ -1,5 +1,12 @@
 # datasette-vega
 
+This is Brandon's working branch. Includes the following fixes:
+
+- allow dynamic resizing of chart [datasette-vega#32](https://github.com/simonw/datasette-vega/issues/32)
+- allow hiding/showing chart [datasette-vega#36](https://github.com/simonw/datasette-vega/issues/36) [datasette-vega#17](https://github.com/simonw/datasette-vega/issues/17) [datasette-vega#PR-18](https://github.com/simonw/datasette-vega/pull/18)
+- make chart show up on query page (and any page with `columns`) [datasette-vega#41](https://github.com/simonw/datasette-vega/issues/41)
+- include development instructions [datasette-vega#PR-46](https://github.com/simonw/datasette-vega/pull/46)
+
 [![PyPI](https://img.shields.io/pypi/v/datasette-vega.svg)](https://pypi.org/project/datasette-vega/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-vega/blob/master/LICENSE)
 
