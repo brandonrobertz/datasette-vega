@@ -33,7 +33,9 @@ class DatasetteVega extends Component {
     y_column: null,
     y_type: "quantitative",
     color_column: "",
-    size_column: ""
+    size_column: "",
+    width: "",
+    height: "",
   }
   constructor(props) {
     super(props);
@@ -163,6 +165,12 @@ class DatasetteVega extends Component {
       mark: this.state.mark,
       encoding: encoding
     }
+    if (this.state.width) {
+      spec.width = this.state.width;
+    }
+    if (this.state.height) {
+      spec.height = this.state.height;
+    }
     if (spec.mark && spec.encoding.x.field && spec.encoding.y.field) {
       vegaEmbed(this.chartRef.current, spec, {theme: 'quartz', tooltip: true});
       document.location.hash = '#' + this.serializeState();
@@ -233,6 +241,10 @@ class DatasetteVega extends Component {
             <option value="">-- none --</option>
             {columns.map(column => <option key={column} value={column}>{column}</option>)}
           </select></div></label>
+        </div>
+        <div className="size">
+          <label>Width <input value={this.state.width} onChange={ev => onChangeSelect("width", ev)} /></label>
+          <label>Height <input value={this.state.height} onChange={ev => onChangeSelect("height", ev)} /></label>
         </div>
       </form>
       <div style={{overflow:'auto'}}>

@@ -119,3 +119,10 @@ form.datasette-vega div {
 .datasette-vega .radio-buttons {
   margin-bottom: 1em;
 }
+
+.datasette-vega .size label {
+  margin-right: 1em;
+}
+.datasette-vega .size input {
+  width: 7em;
+}
