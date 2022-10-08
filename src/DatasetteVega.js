@@ -22,21 +22,22 @@ const unserialize = (s, prefix) => {
 };
 
 const escapeString = s => (s || '').replace(/"/g, '\\x22').replace(/'/g, '\\x27');
+const defaultState = {
+  show: false,
+  columns: [],
+  mark: null,
+  x_column: null,
+  x_type: "ordinal",
+  y_column: null,
+  y_type: "quantitative",
+  color_column: "",
+  size_column: "",
+  width: "",
+  height: "",
+};
 
 class DatasetteVega extends Component {
-  state = {
-    show: false,
-    columns: [],
-    mark: null,
-    x_column: null,
-    x_type: "ordinal",
-    y_column: null,
-    y_type: "quantitative",
-    color_column: "",
-    size_column: "",
-    width: "",
-    height: "",
-  }
+  state = defaultState;
   constructor(props) {
     super(props);
     this.chartRef = React.createRef();
@@ -91,6 +92,8 @@ class DatasetteVega extends Component {
           x_column: columns[0],
           y_column: columns[1],
         };
+        // save columns for hide/show functionality
+        defaultState.columns = columns;
         // Is there state in the URL? If so use that too
         let urlState = unserialize(document.location.hash, 'g');
         if (Object.keys(urlState).length) {
@@ -198,8 +201,8 @@ class DatasetteVega extends Component {
     }, this.renderGraph.bind(this));
   }
   hideChart() {
-    this.setState({
-      show: false
+    this.setState(defaultState, () => {
+      document.location.hash = '#' + this.serializeState();
     });
   }
   render() {
