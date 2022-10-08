@@ -113,7 +113,9 @@ class DatasetteVega extends Component {
       y_column,
       y_type,
       color_column,
-      size_column
+      size_column,
+      width,
+      height
    }) => ({
       mark,
       x_column,
@@ -121,7 +123,9 @@ class DatasetteVega extends Component {
       y_column,
       y_type,
       color_column,
-      size_column
+      size_column,
+      width,
+      height
     }))(this.state), 'g');
   }
   onPopStateChange(ev) {
