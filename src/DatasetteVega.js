@@ -22,8 +22,10 @@ const unserialize = (s, prefix) => {
 };
 
 const escapeString = s => (s || '').replace(/"/g, '\\x22').replace(/'/g, '\\x27');
+const showByDefault = !unserialize(document.location.hash, 'g').mark ? false : true;
 const defaultState = {
-  show: false,
+  // show by default IF we have params saved
+  show: showByDefault,
   columns: [],
   mark: null,
   x_column: null,
@@ -99,13 +101,15 @@ class DatasetteVega extends Component {
         if (Object.keys(urlState).length) {
           initialState = Object.assign(initialState, urlState);
           // And show the widget
-          initialState.show = true;
+          initialState.show = showByDefault;
         }
         this.setState(initialState, () => {
           this.onPopStateChange();
           this.renderGraph();
         });
       }
+    }).catch((e) => {
+      console.error(`Error fetching url: ${url}`);
     });
   }
   serializeState() {
@@ -180,8 +184,11 @@ class DatasetteVega extends Component {
     if (this.state.height) {
       spec.height = this.state.height;
     }
-    if (spec.mark && spec.encoding.x.field && spec.encoding.y.field) {
-      vegaEmbed(this.chartRef.current, spec, {theme: 'quartz', tooltip: true});
+    /* Do some basic validation and run vega if we're good */
+    if (this.state.show && spec.mark && spec.encoding.x.field && spec.encoding.y.field) {
+      vegaEmbed(this.chartRef.current, spec, {theme: 'quartz', tooltip: true}).catch((e) => {
+        console.error("Error running vega:", e);
+      });
       document.location.hash = '#' + this.serializeState();
       this.props.onFragmentChange && this.props.onFragmentChange();
       // Add to state so react debug tools can see it (for debugging):
@@ -203,7 +210,8 @@ class DatasetteVega extends Component {
     }, this.renderGraph.bind(this));
   }
   hideChart() {
-    this.setState(defaultState, () => {
+    const newState = Object.assign({}, defaultState, {show: false});
+    this.setState(newState, () => {
       document.location.hash = '#' + this.serializeState();
     });
   }
