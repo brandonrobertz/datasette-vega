@@ -151,7 +151,9 @@ class DatasetteVega extends Component {
       tooltip: {field: "_tooltip_summary", type: "ordinal"},
     }
     if (this.state.color_column) {
-      encoding.color = {field: this.state.color_column, type: "nominal"};
+      encoding.color = {field: this.state.color_column, type: "nominal", scale: {
+        scheme: "tableau20"
+      }};
     }
     if (this.state.size_column) {
       encoding.size = {field: this.state.size_column, type: "quantitative"};
